@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: internet_provider_db
+    environment:
+      POSTGRES_DB: internet_provider_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/2_data.sql
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
